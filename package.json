@@ -16,7 +16,8 @@
         "quill-blot-formatter": "^1.0.5",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
-        "react-quill": "^2.0.0"
+        "react-quill": "^2.0.0",
+        "slate-react": "^0.83.2"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
