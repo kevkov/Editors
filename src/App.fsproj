@@ -4,11 +4,11 @@
     </PropertyGroup>
     <ItemGroup>
         <None Include="index.html" />
+        <Compile Include="Slate.fs" />
         <Compile Include="Extensions.fs" />
         <Compile Include="Components.fs" />
         <Compile Include="Main.fs" />
         <Content Include="styles\global.scss" />
-        <Compile Include="Slate.fs" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Feliz" Version="1.66.0" />

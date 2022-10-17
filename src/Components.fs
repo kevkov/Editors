@@ -5,6 +5,7 @@ open type Html
 open Feliz.Router
 open Feliz.Quill
 open Browser.Types
+open Slate
 
 type Components =
     /// <summary>
@@ -13,14 +14,20 @@ type Components =
     /// </summary>
     [<ReactComponent>]
     static member Editors() =
-        let editorRef = React.useRef<Element>(null)
-        let editor = Quill.editor [
+        let editorRef = React.useRef<Browser.Types.Element>(null)
+        let quill = Quill.editor [
             prop.ref (fun e -> editorRef.current <- e) :?> IQuillEditorProperty
             editor.onTextChanged (fun x -> Fable.Core.JS.console.log(editorRef))
             editor.toolbar Toolbar.all
             editor.placeholder "Start some awesome story..."
         ]
-        editor
+        
+        let editor = createEditor()
+        let slate = Slate {| editor = editor; value = [||]; children = [|Editable {| placeholder = "hello" |}|]|}
+        React.fragment [
+            quill
+            slate
+        ]
         
 
     /// <summary>
