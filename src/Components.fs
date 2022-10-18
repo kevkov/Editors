@@ -14,16 +14,18 @@ type Components =
     /// </summary>
     [<ReactComponent>]
     static member Editors() =
-        let editorRef = React.useRef<Browser.Types.Element>(null)
         let quill = Quill.editor [
-            prop.ref (fun e -> editorRef.current <- e) :?> IQuillEditorProperty
-            editor.onTextChanged (fun x -> Fable.Core.JS.console.log(editorRef))
+            editor.onTextChanged (fun x -> Fable.Core.JS.console.log(x))
             editor.toolbar Toolbar.all
             editor.placeholder "Start some awesome story..."
         ]
         
-        let editor = createEditor()
-        let slate = Slate {| editor = editor; value = [||]; children = [|Editable {| placeholder = "hello" |}|]|}
+        //let editor = useSlate( fun () -> withReact(createEditor()))
+        let editor = withReact(createEditor())
+        // let editor = createEditor()
+        let slate = Slate {| editor = editor
+                             value = [| Element {| children = [| Text {| text = "foo bar" |}; Text {| text = "baz" |} |] |} |]
+                             children = [ Editable {| placeholder = "hello" |} ] |}
         React.fragment [
             quill
             slate
