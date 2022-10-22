@@ -2,9 +2,9 @@ namespace App
 
 open Feliz
 open type Html
+
 open Feliz.Router
 open Feliz.Quill
-open Browser.Types
 open Slate
 
 type Components =
@@ -14,37 +14,44 @@ type Components =
     /// </summary>
     [<ReactComponent>]
     static member Editors() =
-        let quill = Quill.editor [
-            editor.onTextChanged (fun x -> Fable.Core.JS.console.log(x))
-            editor.toolbar Toolbar.all
-            editor.placeholder "Start some awesome story..."
-        ]
-        
-        //let editor = useSlate( fun () -> withReact(createEditor()))
-        let editor = withReact(createEditor())
-        // let editor = createEditor()
-        let slate = Slate {| editor = editor
-                             value = [| Element {| children = [| Text {| text = "foo bar" |}; Text {| text = "baz" |} |] |} |]
-                             children = [ Editable {| placeholder = "hello" |} ] |}
-        React.fragment [
-            quill
-            slate
-        ]
-        
+        let quill =
+            Quill.editor
+                [ editor.onTextChanged (fun x -> Fable.Core.JS.console.log (x))
+                  editor.toolbar Toolbar.all
+                  editor.placeholder "Start some awesome story..." ]
+
+        let editor =
+            Slate.withReact (Editor.create ())
+
+        let slate =
+            Slate.create
+                [ Slate.editor editor
+                  Slate.value
+                      [| Element
+                             {| children =
+                                 [| Text {| text = "foo bar" |}
+                                    Text {| text = "baz" |} |] |} |]
+                  Slate.children [
+                      Editable.create [
+                          Editable.placeHolder "hello"
+                      ]
+                  ] ]
+
+        React.fragment [ quill; slate ]
+
 
     /// <summary>
     /// A stateful React component that maintains a counter
     /// </summary>
     [<ReactComponent>]
     static member Counter() =
-        let count, setCount = React.useState(0)
-        div [
-            h1 count
-            button [
-                prop.onClick (fun _ -> setCount(count + 1))
-                prop.text "Increment"
-            ]
-        ]
+        let count, setCount = React.useState (0)
+
+        div
+            [ h1 count
+              button
+                  [ prop.onClick (fun _ -> setCount (count + 1))
+                    prop.text "Increment" ] ]
 
     /// <summary>
     /// A React component that uses Feliz.Router
@@ -52,14 +59,14 @@ type Components =
     /// </summary>
     [<ReactComponent>]
     static member Router() =
-        let (currentUrl, updateUrl) = React.useState(Router.currentUrl())
-        React.router [
-            router.onUrlChanged updateUrl
-            router.children [
-                match currentUrl with
-                | [ ] -> Html.h1 "Index"
-                | [ "hello" ] -> Components.Editors()
-                | [ "counter" ] -> Components.Counter()
-                | otherwise -> Html.h1 "Not found"
-            ]
-        ]
+        let (currentUrl, updateUrl) =
+            React.useState (Router.currentUrl ())
+
+        React.router
+            [ router.onUrlChanged updateUrl
+              router.children
+                  [ match currentUrl with
+                    | [] -> Html.h1 "Index"
+                    | [ "hello" ] -> Components.Editors()
+                    | [ "counter" ] -> Components.Counter()
+                    | otherwise -> Html.h1 "Not found" ] ]
