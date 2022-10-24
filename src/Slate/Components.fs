@@ -15,6 +15,9 @@ type Editable =
     static member inline placeHolder(placeholder: string) : IEditableProp =
         Interop.mkEditableProp "placeholder" placeholder
 
+    static member inline onKeyDown(handler: Browser.Types.Event -> unit) : IEditableProp =
+        Interop.mkEditableProp "onKeyDown" handler
+
 [<Erase>]
 type Slate =
     static member inline create(props: ISlateProp seq) =
@@ -24,6 +27,7 @@ type Slate =
 
     static member inline value(value: Descendant array) : ISlateProp = Interop.mkSlateProp "value" value
 
-    static member inline children(children: ReactElement list) = unbox<ISlateProp> (prop.children children)
-    
-    static member inline withReact(editor: IEditor) = Interop.withReact(editor)
+    static member inline children(children: ReactElement list) =
+        unbox<ISlateProp> (prop.children children)
+
+    static member inline withReact(editor: IEditor) = Interop.withReact (editor)

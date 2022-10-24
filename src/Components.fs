@@ -15,29 +15,36 @@ type Components =
     [<ReactComponent>]
     static member Editors() =
         let quill =
-            Quill.editor
-                [ editor.onTextChanged (fun x -> Fable.Core.JS.console.log (x))
-                  editor.toolbar Toolbar.all
-                  editor.placeholder "Start some awesome story..." ]
+            Quill.editor [
+                editor.onTextChanged (fun x -> Fable.Core.JS.console.log (x))
+                editor.toolbar Toolbar.all
+                editor.placeholder "Start some awesome story..."
+            ]
 
-        let editor =
-            Slate.withReact (Editor.create ())
+        let editor, _ = React.useState(Slate.withReact (Editor.create ()))
 
         let slate =
-            Slate.create
-                [ Slate.editor editor
-                  Slate.value
-                      [| Element
-                             {| children =
-                                 [| Text {| text = "foo bar" |}
-                                    Text {| text = "baz" |} |] |} |]
-                  Slate.children [
-                      Editable.create [
-                          Editable.placeHolder "hello"
-                      ]
-                  ] ]
+            Slate.create [
+                Slate.editor editor
+                Slate.value [|
+                    Element
+                        {|
+                            children =
+                                [|
+                                    Text {| text = "foo bar" |}
+                                    Text {| text = "baz" |}
+                                |]
+                        |}
+                |]
+                Slate.children [
+                    Editable.create [
+                        Editable.placeHolder "hello"
+                        Editable.onKeyDown (fun _ -> Fable.Core.JS.console.log editor.children)
+                    ]
+                ]
+            ]
 
-        React.fragment [ quill; slate ]
+        React.fragment [ slate ]
 
 
     /// <summary>
@@ -47,11 +54,13 @@ type Components =
     static member Counter() =
         let count, setCount = React.useState (0)
 
-        div
-            [ h1 count
-              button
-                  [ prop.onClick (fun _ -> setCount (count + 1))
-                    prop.text "Increment" ] ]
+        div [
+            h1 count
+            button [
+                prop.onClick (fun _ -> setCount (count + 1))
+                prop.text "Increment"
+            ]
+        ]
 
     /// <summary>
     /// A React component that uses Feliz.Router
@@ -62,11 +71,13 @@ type Components =
         let (currentUrl, updateUrl) =
             React.useState (Router.currentUrl ())
 
-        React.router
-            [ router.onUrlChanged updateUrl
-              router.children
-                  [ match currentUrl with
-                    | [] -> Html.h1 "Index"
-                    | [ "hello" ] -> Components.Editors()
-                    | [ "counter" ] -> Components.Counter()
-                    | otherwise -> Html.h1 "Not found" ] ]
+        React.router [
+            router.onUrlChanged updateUrl
+            router.children [
+                match currentUrl with
+                | [] -> Html.h1 "Index"
+                | [ "hello" ] -> Components.Editors()
+                | [ "counter" ] -> Components.Counter()
+                | otherwise -> Html.h1 "Not found"
+            ]
+        ]

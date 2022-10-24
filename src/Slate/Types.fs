@@ -5,7 +5,8 @@ open Fable.Core
 type IEditableProp = interface end
 type ISlateProp = interface end
 
-type IEditor = interface end
+type IEditor =
+    abstract member children: obj array
 type Editor = inherit IEditor
 
 [<Erase>]
