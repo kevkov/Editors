@@ -21,7 +21,8 @@ type Components =
                 editor.placeholder "Start some awesome story..."
             ]
 
-        let editor, _ = React.useState(Slate.withReact (Editor.create ()))
+        let editor, _ =
+            React.useState (Slate.withReact (Editor.create ()))
 
         let slate =
             Slate.create [
@@ -37,6 +38,13 @@ type Components =
                         |}
                 |]
                 Slate.children [
+                    Html.div [
+                        prop.className "toolbar"
+                        prop.children [
+                            Edit.markButton "bold" "format_bold"
+                            Edit.markButton "bold" "format_bold"
+                        ]
+                    ]
                     Editable.create [
                         Editable.placeHolder "hello"
                         Editable.onKeyDown (fun _ -> Fable.Core.JS.console.log editor.children)
@@ -44,7 +52,12 @@ type Components =
                 ]
             ]
 
-        React.fragment [ slate ]
+        React.fragment [
+            Html.div [
+                prop.className "wrapper"
+                prop.children [ slate ]
+            ]
+        ]
 
 
     /// <summary>

@@ -31,3 +31,15 @@ type Slate =
         unbox<ISlateProp> (prop.children children)
 
     static member inline withReact(editor: IEditor) = Interop.withReact (editor)
+
+type Edit =
+    static member icon (name: string) =
+        Html.span [
+            prop.className "material-icons icon"
+            prop.text name
+        ]
+
+    static member markButton (format: string) (icon: string) =
+        Html.span [
+            Edit.icon icon
+        ]
