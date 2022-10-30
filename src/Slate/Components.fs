@@ -32,7 +32,7 @@ type Slate =
 
     static member inline withReact(editor: IEditor) = Interop.withReact (editor)
 
-type Edit =
+type UI =
     static member icon (name: string) =
         Html.span [
             prop.className "material-icons icon"
@@ -41,5 +41,5 @@ type Edit =
 
     static member markButton (format: string) (icon: string) =
         Html.span [
-            Edit.icon icon
+            UI.icon icon
         ]

@@ -41,8 +41,8 @@ type Components =
                     Html.div [
                         prop.className "toolbar"
                         prop.children [
-                            Edit.markButton "bold" "format_bold"
-                            Edit.markButton "bold" "format_bold"
+                            UI.markButton "bold" "format_bold"
+                            UI.markButton "bold" "format_bold"
                         ]
                     ]
                     Editable.create [

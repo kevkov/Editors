@@ -7,6 +7,7 @@ type ISlateProp = interface end
 
 type IEditor =
     abstract member children: obj array
+    abstract member marks: obj
 type Editor = inherit IEditor
 
 [<Erase>]
