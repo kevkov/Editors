@@ -8,8 +8,12 @@ module Interop =
     let inline mkEditableProp (key: string) (value: obj) : IEditableProp = unbox (key, value)
     let inline mkSlateProp (key: string) (value: obj) : ISlateProp = unbox (key, value)
 
-    let editable : obj = import "Editable" "slate-react"
-    let slate : obj = import "Slate" "slate-react"
-    
-    let createEditor (): obj = import "createEditor" "slate"    
-    let withReact (editor: IEditor): IEditor = import "withReact" "slate-react"
+    type Slate =
+        static member createEditor (): obj = import "createEditor" "slate"
+
+    type SlateReact =
+        static member Editable : obj = import "Editable" "slate-react"
+        static member Slate : obj = import "Slate" "slate-react"
+
+        static member withReact (editor: IEditor): IEditor = import "withReact" "slate-react"
+
