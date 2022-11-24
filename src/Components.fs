@@ -7,13 +7,12 @@ open Feliz.Router
 open Feliz.Quill
 open Slate
 
-type Components =
-    /// <summary>
-    /// The simplest possible React component.
-    /// Shows a header with the text Hello World
-    /// </summary>
+module Components =
+    [<ReactComponent(import="ControlledEditor", from="./Remirror/Controlled.jsx")>]
+    let ControlledEditor () = React.imported()
+
     [<ReactComponent>]
-    static member Editors() =
+    let Editors() =
         let quill =
             Quill.editor [
                 editor.onTextChanged (fun x -> Fable.Core.JS.console.log (x))
@@ -55,7 +54,12 @@ type Components =
         React.fragment [
             Html.div [
                 prop.className "wrapper"
-                prop.children [ slate ]
+                prop.children [
+                    Html.h4 "Slate raw"
+                    slate
+                    Html.h4 "Remirror controlled"
+                    ControlledEditor()
+                ]
             ]
         ]
 
@@ -64,7 +68,7 @@ type Components =
     /// A stateful React component that maintains a counter
     /// </summary>
     [<ReactComponent>]
-    static member Counter() =
+    let Counter() =
         let count, setCount = React.useState (0)
 
         div [
@@ -80,7 +84,7 @@ type Components =
     /// to determine what to show based on the current URL
     /// </summary>
     [<ReactComponent>]
-    static member Router() =
+    let Router() =
         let (currentUrl, updateUrl) =
             React.useState (Router.currentUrl ())
 
@@ -89,8 +93,8 @@ type Components =
             router.children [
                 match currentUrl with
                 | [] -> Html.h1 "Index"
-                | [ "hello" ] -> Components.Editors()
-                | [ "counter" ] -> Components.Counter()
+                | [ "hello" ] -> Editors()
+                | [ "counter" ] -> Counter()
                 | otherwise -> Html.h1 "Not found"
             ]
         ]

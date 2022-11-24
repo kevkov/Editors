@@ -4,6 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <None Include="index.html" />
+        <Content Include="Remirror\Controlled.jsx" />
         <Compile Include="Slate\Types.fs" />
         <Compile Include="Slate\Interop.fs" />
         <Compile Include="Slate\Components.fs" />
