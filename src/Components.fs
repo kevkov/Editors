@@ -1,5 +1,6 @@
 namespace App
 
+open Fable.Core.JS
 open Feliz
 open type Html
 
@@ -10,6 +11,10 @@ open Slate
 module Components =
     [<ReactComponent(import="ControlledEditor", from="./Remirror/Controlled.jsx")>]
     let ControlledEditor () = React.imported()
+
+    [<ReactComponent(import="Basic", from="./Remirror/BasicWsg.tsx")>]
+    let WsgEditor () = React.imported()
+    Fable.Core.JS.console.log("wsg:", (WsgEditor ()))
 
     [<ReactComponent>]
     let Editors() =
@@ -59,6 +64,8 @@ module Components =
                     slate
                     Html.h4 "Remirror controlled"
                     ControlledEditor()
+                    Html.h4 "Remirror BasicWysiwyg"
+                    WsgEditor ()
                 ]
             ]
         ]

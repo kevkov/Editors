@@ -5,7 +5,7 @@ var path = require("path");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+// const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const { patchGracefulFileSystem } = require("./webpack.common.js");
 patchGracefulFileSystem();
@@ -35,7 +35,7 @@ var CONFIG = {
     // Use babel-preset-env to generate JS compatible with most-used browsers.
     // More info at https://babeljs.io/docs/en/next/babel-preset-env.html
     babel: {
-        plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+        // plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
         presets: ["@babel/preset-env", "@babel/preset-react"]
     }
 }
@@ -101,11 +101,12 @@ module.exports = {
             }),
         ])
         : commonPlugins.concat([
-            new ReactRefreshWebpackPlugin()
+            // new ReactRefreshWebpackPlugin()
         ]),
     resolve: {
         // See https://github.com/fable-compiler/Fable/issues/1490
         symlinks: false,
+        extensions: ['.tsx', '.ts', '.fs.js', '.js', '.scss', '.css'],
         modules: [resolve("./node_modules")],
         alias: {
             // Some old libraries still use an old specific version of core-js
@@ -115,18 +116,30 @@ module.exports = {
     },
     // Configuration for webpack-dev-server
     devServer: {
-        publicPath: "/",
-        contentBase: resolve(CONFIG.assetsDir),
+        static: {
+            directory: resolve(CONFIG.assetsDir),
+            publicPath: '/'
+        },
+        // contentBase: resolve(CONFIG.assetsDir),
         port: CONFIG.devServerPort,
         proxy: CONFIG.devServerProxy,
-        hot: true,
-        inline: true
+        hot: true
+        // inline: true
     },
     // - babel-loader: transforms JS to old syntax (compatible with old browsers)
     // - sass-loaders: transforms SASS/SCSS into JS
     // - file-loader: Moves files referenced in the code (fonts, images) into output folder
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                    }
+                ],
+                exclude: /node_modules/,
+            },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,

@@ -11,43 +11,50 @@
         "test": "dotnet fable tests --outDir dist/tests && mocha dist/tests -r esm"
     },
     "dependencies": {
+        "@reach/auto-id": "^0.18.0",
         "@remirror/pm": "^2.0.1",
         "@remirror/react": "^2.0.16",
+        "@remirror/react-editors": "^1.0.19",
         "bulma": "^0.9.1",
         "date-fns": "^2.16.1",
-        "is-plain-object": "^5.0.0",
         "quill-blot-formatter": "^1.0.5",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "react-quill": "^2.0.0",
         "remirror": "^2.0.15",
         "slate-react": "^0.83.2"
+    },
+    "overrides": {
+        "is-extendable@1.0.1": {
+            "is-plain-object": "^5.0.0"
+        }
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.12.10",
         "@babel/runtime": "^7.12.5",
-        "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
         "babel-loader": "^8.2.2",
-        "copy-webpack-plugin": "^6.4.1",
+        "copy-webpack-plugin": "^9.1.0",
         "core-js": "^3.8.2",
-        "css-loader": "^5.0.1",
+        "css-loader": "^6.5.1",
         "dotenv-webpack": "^6.0.0",
         "esm": "^3.2.25",
         "file-loader": "^6.2.0",
         "graceful-fs": "^4.2.4",
-        "html-webpack-plugin": "^4.5.1",
-        "mini-css-extract-plugin": "^1.3.4",
+        "html-entities": "^2.3.2",
+        "html-webpack-plugin": "^5.5.0",
+        "mini-css-extract-plugin": "^2.4.5",
         "mocha": "^8.2.1",
-        "react-refresh": "^0.9.0",
-        "sass": "^1.32.4",
-        "sass-loader": "^10.1.1",
-        "source-map-loader": "^2.0.1",
-        "style-loader": "^2.0.0",
+        "sass": "^1.43.4",
+        "sass-loader": "^12.3.0",
+        "source-map-loader": "^3.0.0",
+        "style-loader": "^3.3.1",
         "terser": "^4.8.1",
-        "webpack": "^4.44.2",
-        "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.2"
+        "ts-loader": "^8.3.0",
+        "typescript": "^4.9.3",
+        "webpack": "^5.64.2",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.5.0"
     }
 }
